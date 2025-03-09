@@ -3,20 +3,22 @@ import Layout from "../layouts/Layout.astro";
 import { Vimeo } from "astro-embed";
 import PocketBase from "pocketbase";
 
-const pb = new PocketBase(import.meta.env.POCKETBASE_URL);
-await pb.admins.authWithPassword(
-  import.meta.env.POCKETBASE_EMAIL,
-  import.meta.env.POCKETBASE_PASSWORD
-);
 
-const data = await pb.collection("works").getFullList();
-await pb.authStore.clear();
-data.map((post: any) => {
-  return {
-    params: { slug: post.slug },
-    props: { post },
-  };
-});
+export async function getStaticPaths() {
+
+  const pb = new PocketBase(import.meta.env.POCKETBASE_URL);
+  await pb.admins.authWithPassword(import.meta.env.POCKETBASE_EMAIL, import.meta.env.POCKETBASE_PASSWORD);
+
+  
+  const data = await pb.collection("works").getFullList();
+  await pb.authStore.clear();
+  return data.map((post: any) => {
+    return {
+      params: { slug: post.slug },
+      props: { post },
+    };
+  });
+}
 
 const { post } = Astro.props;
 ---
@@ -24,16 +26,16 @@ const { post } = Astro.props;
 <Layout>
   <div>
     <a class="my-9" href="/works">{post.title}</a>
-    {
-      post.media.map((image: any) => (
+    {post.media.map((image: any) => 
         <img
           class="w-lg md:w-md my-4"
           src={`${import.meta.env.POCKETBASE_URL}/api/files/works/${post.id}/${image}`}
           alt={post.title}
         />
-      ))
+    )}
+    {(post.video != "") &&
+      <Vimeo class="w-md my-4" id={post.video} />
     }
-    {post.video != "" && <Vimeo class="w-md my-4" id={post.video} />}
-    <Fragment set:html={post.desc} />
+    <Fragment set:html={post.desc}>
   </div>
 </Layout>
