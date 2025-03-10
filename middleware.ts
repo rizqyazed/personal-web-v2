@@ -4,11 +4,13 @@ import { defineMiddleware } from 'astro:middleware';
 let previouslySelectedWorks = new Set();
 
 export const onRequest = defineMiddleware(async (context, next) => {
+  console.log("middleware");
   const pb = new PocketBase(import.meta.env.POCKETBASE_URL);
   await pb.admins.authWithPassword(import.meta.env.POCKETBASE_EMAIL, import.meta.env.POCKETBASE_PASSWORD);
   const data = await pb.collection('works').getFullList();
   await pb.authStore.clear();
   if (context.url.pathname === "/works") {
+    console.log("got into works");
     if (data.length === 0) {
       throw new Error("No works found");
     }
@@ -38,10 +40,6 @@ export const onRequest = defineMiddleware(async (context, next) => {
     console.log(randomWork.slug);
 
     return Response.redirect(new URL(`/${randomWork.slug}`, context.url), 302);
-  }
-  
-  if (context.url.pathname === '/cv') {
-    return Response.redirect(new URL(""));
   } 
 
   return next();

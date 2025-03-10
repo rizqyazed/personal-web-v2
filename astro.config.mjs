@@ -9,6 +9,6 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   adapter: vercel({
-    isr: true,
+    edgeMiddleware: true,
   }),
 });
