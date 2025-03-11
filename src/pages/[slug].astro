@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import { Vimeo } from "astro-embed";
 import PocketBase from "pocketbase";
+import { Image } from "astro:assets";
 const { slug } = Astro.params;
 
 const pb = new PocketBase(import.meta.env.POCKETBASE_URL);
@@ -38,10 +39,11 @@ const post = await pb.collection("works").getFirstListItem(`slug="${slug}"`);
     <a class="my-9" href="/works">{post.title}</a>
     {
       post.media.map((image: any) => (
-        <img
-          class="w-lg md:w-md my-4"
+        <Image
           src={`${import.meta.env.POCKETBASE_URL}/api/files/works/${post.id}/${image}`}
           alt={post.title}
+          class="w-lg md:w-md my-4"
+          inferSize
         />
       ))
     }

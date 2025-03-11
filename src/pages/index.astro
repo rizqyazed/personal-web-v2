@@ -1,14 +1,16 @@
 ---
 export const prerender = true;
+import { Image } from "astro:assets";
 import image from "../assets/landing_bg.jpeg";
 ---
 
 <div class="everything">
   <a href="/works">
-    <img
+    <Image
+      alt="landing"
       onload="this.width=imgwidth;this.height=imgheight;"
       class="landing"
-      src={image.src}
+      src={image}
     />
   </a>
   
