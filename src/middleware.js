@@ -39,8 +39,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
     console.log(previouslySelectedWorks);
     console.log(randomWork.slug);
 
-    // return context.redirect(`/${randomWork.slug}`, 302);
-    return Response.redirect(new URL(`/${randomWork.slug}`, context.url), 302);
+    return context.redirect(`/${randomWork.slug}`, 302);
+    // return Response.redirect(new URL(`/${randomWork.slug}`, context.url), 302);
   } 
 
   return next();
