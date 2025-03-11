@@ -10,5 +10,6 @@ export default defineConfig({
   },
   adapter: vercel({
     isr: true,
+    edgeMiddleware: true,
   }),
 });
