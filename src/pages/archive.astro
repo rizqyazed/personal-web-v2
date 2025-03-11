@@ -9,7 +9,7 @@ await pb.authStore.clear();
 ---
 
 <Layout title="index">
-  <div>
+  <div class="flex flex-row flex-wrap">
     {works.map((item) => <a href={item.slug}>{item.slug},&nbsp;</a>)}
   </div>
 </Layout>
