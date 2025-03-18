@@ -11,7 +11,7 @@ const {title} = Astro.props;
 ---
 
 <div>
-  <a id="ran" href="">{title == "" ? <slot/> : title}</a>
+  <a id="ran" href="">{title == null ? <slot/> : title}</a>
 </div>
 
 <script define:vars={{data}}>
