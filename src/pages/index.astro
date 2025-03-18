@@ -1,18 +1,18 @@
 ---
-export const prerender = true;
 import { Image } from "astro:assets";
+import Random from "../components/Random.astro";
 import image from "../assets/landing_bg.jpeg";
 ---
 
 <div class="everything">
-  <a href="/works">
+  <Random>
     <Image
       alt="landing"
       onload="this.width=imgwidth;this.height=imgheight;"
       class="landing"
       src={image}
     />
-  </a>
+  </Random>
   
   <!-- <map name="landing">
     <area

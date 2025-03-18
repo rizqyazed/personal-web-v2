@@ -4,12 +4,12 @@ import tailwindcss from '@tailwindcss/vite';
 import vercel from "@astrojs/vercel";
 
 export default defineConfig({
-  output: "server",
-  vite: {
-    plugins: [tailwindcss()],
-  },
-  adapter: vercel({
-    // isr: true,
-    // edgeMiddleware: true,
-  }),
+    output: "static",
+    vite: {
+        plugins: [tailwindcss()],
+    },
+    adapter: vercel({
+        // isr: true,
+        // edgeMiddleware: true,
+    }),
 });

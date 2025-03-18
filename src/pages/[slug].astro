@@ -1,42 +1,34 @@
 ---
+import Random from "../components/Random.astro"
 import Layout from "../layouts/Layout.astro";
 import { Vimeo } from "astro-embed";
 import PocketBase from "pocketbase";
 import { Image } from "astro:assets";
-const { slug } = Astro.params;
+// const { slug } = Astro.params;
 
-const pb = new PocketBase(import.meta.env.POCKETBASE_URL);
-await pb.admins.authWithPassword(
-  import.meta.env.POCKETBASE_EMAIL,
-  import.meta.env.POCKETBASE_PASSWORD
-);
 
 export async function getStaticPaths() {
-  const posts = await pb.collection("works").getFullList();
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-  }));
+    const pb = new PocketBase(import.meta.env.POCKETBASE_URL);
+    await pb.admins.authWithPassword(
+        import.meta.env.POCKETBASE_EMAIL,
+        import.meta.env.POCKETBASE_PASSWORD
+    );
+    const data = await pb.collection("works").getFullList();
+    pb.authStore.clear();
+    return data.map((post: any) => {
+        return {
+            params: { slug: post.slug },
+            props: { post },
+        };
+    });
 }
 
-const post = await pb.collection("works").getFirstListItem(`slug="${slug}"`);
-
-// export async function getStaticPaths() {
-
-//   await pb.authStore.clear();
-//   return data.map((post: any) => {
-//     return {
-//       params: { slug: post.slug },
-//       props: { post },
-//     };
-//   });
-// }
-
-// const { post } = Astro.props;
+const { post } = Astro.props;
 ---
 
 <Layout>
   <div>
-    <a class="my-9" href="/works">{post.title}</a>
+    <Random class="my-9" title={post.title}/>
     {
       post.media.map((image: any) => (
         <Image
