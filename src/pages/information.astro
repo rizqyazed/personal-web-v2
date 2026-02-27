@@ -1,0 +1,59 @@
+---
+import { Image } from "astro:assets"
+import Layout from "../layouts/Layout.astro"
+
+import image from "../assets/information1.jpeg";
+---
+
+<Layout>
+    <main>
+        <h1>hey</h1>
+        <a class="" href="https://docs.google.com/document/d/1LmetcrNTMu1O90gvJtU3qlouph9LaM8yJITrcoSCzdc/edit?usp=sharing">cv</a>
+        <a class="inline" href="https://www.instagram.com/rizqyazed/">insta</a>
+        <a class="inline" href="https://youtube.com/@rizq4238?si=FOOBx39e-b4B7S-l">yt</a>
+        <a class="inline"href="mailto:rizqyazed@gmail.com">email</a>
+        <a class="inline" href="https://www.are.na/rizq-yazed">are.na</a>
+        <Image
+          alt="my awesome fit on a digi cam xD"
+          src={image}
+        />
+        <div class="desktop-stars">
+            <div style="position:absolute; bottom:10%; right:10%; display:inline-block; width:50px; text-align: center; margin: 0;">
+                <input class="m-0" type="checkbox" />
+                <div>
+                    <input class="m-0" type="checkbox" />
+                    <input class="m-0" type="checkbox" />
+                    <input class="m-0" type="checkbox" />
+                </div>
+                <input class="m-0" type="checkbox" />
+           </div>
+            <div style="position:absolute; top:10%; left:50%; display:inline-block; width:50px; text-align: center; margin: 0;">
+                <input class="m-0" type="checkbox" />
+                <div>
+                    <input class="m-0" type="checkbox" />
+                    <input class="m-0" type="checkbox" />
+                    <input class="m-0" type="checkbox" />
+                </div>
+                <input class="m-0" type="checkbox" />
+           </div>
+            <div style="position:absolute; top:65%; left:35%; display:inline-block; width:50px; text-align: center; margin: 0;">
+                <input class="m-0" type="checkbox" />
+                <div>
+                    <input class="m-0" type="checkbox" />
+                    <input class="m-0" type="checkbox" />
+                    <input class="m-0" type="checkbox" />
+                </div>
+                <input class="m-0" type="checkbox" />
+           </div>
+            <div style="position:absolute; top:35%; right:25%; display:inline-block; width:50px; text-align: center; margin: 0;">
+                <input class="m-0" type="checkbox" />
+                <div>
+                    <input class="m-0" type="checkbox" />
+                    <input class="m-0" type="checkbox" />
+                    <input class="m-0" type="checkbox" />
+                </div>
+                <input class="m-0" type="checkbox" />
+           </div>
+        </div>
+    </main> 
+</Layout>

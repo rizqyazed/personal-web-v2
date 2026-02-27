@@ -1,26 +1,25 @@
 ---
-import Random from "../components/Random.astro"
+import Random from "../components/Random.astro";
 import Layout from "../layouts/Layout.astro";
 import { Vimeo } from "astro-embed";
 import PocketBase from "pocketbase";
 import { Image } from "astro:assets";
 // const { slug } = Astro.params;
 
-
 export async function getStaticPaths() {
-    const pb = new PocketBase(import.meta.env.POCKETBASE_URL);
-    await pb.admins.authWithPassword(
-        import.meta.env.POCKETBASE_EMAIL,
-        import.meta.env.POCKETBASE_PASSWORD
-    );
-    const data = await pb.collection("works").getFullList();
-    pb.authStore.clear();
-    return data.map((post: any) => {
-        return {
-            params: { slug: post.slug },
-            props: { post },
-        };
-    });
+  const pb = new PocketBase(import.meta.env.POCKETBASE_URL);
+  await pb.admins.authWithPassword(
+    import.meta.env.POCKETBASE_EMAIL,
+    import.meta.env.POCKETBASE_PASSWORD
+  );
+  const data = await pb.collection("works").getFullList();
+  pb.authStore.clear();
+  return data.map((post: any) => {
+    return {
+      params: { slug: post.slug },
+      props: { post },
+    };
+  });
 }
 
 const { post } = Astro.props;
@@ -28,18 +27,44 @@ const { post } = Astro.props;
 
 <Layout>
   <div>
-    <Random class="my-9" title={post.title}/>
+        <div class="flex flex-row mb-9">
+            <Random class="" title={post.title} /> 
+            <p class="text-blue-950" id="blinking" style="display:none;">(click me!)</p>
+        </div>
     {
       post.media.map((image: any) => (
         <Image
           src={`${import.meta.env.POCKETBASE_URL}/api/files/works/${post.id}/${image}`}
           alt={post.title}
-          class="w-lg md:w-md my-4"
+          class="w-lg md:w-md my-8"
           inferSize
         />
       ))
     }
     {post.video != "" && <Vimeo class="w-md my-4" id={post.video} />}
-    <Fragment set:html={post.desc} />
+    {post.bandcamp != "" && <iframe style="border: 0; width: 100%; height: 120px;" src={post.bandcamp} seamless></iframe>}
+    <div class="mb-8">
+        <Fragment  set:html={post.desc} />
+    </div>
   </div>
 </Layout>
+
+<script>
+  const clickme = document.getElementById("blinking");
+
+  let hidden = false;
+
+  setInterval(blinking, 1000);
+
+  function blinking() {
+    if (!hidden) {
+      clickme!.style.display = "none";
+      console.log("hide");
+      hidden = true;
+    } else {
+      clickme!.style.display = "inline-block";
+      console.log("show");
+      hidden = false;
+    }
+  }
+</script>

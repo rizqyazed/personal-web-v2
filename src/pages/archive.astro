@@ -4,12 +4,11 @@ import PocketBase from "pocketbase";
 
 const pb = new PocketBase(import.meta.env.POCKETBASE_URL);
 await pb.admins.authWithPassword(import.meta.env.POCKETBASE_EMAIL, import.meta.env.POCKETBASE_PASSWORD);
-const works = await pb.collection("works").getFullList();
-await pb.authStore.clear();
+const works = await pb.collection("works").getFullList({ sort: "@random" });
 ---
 
 <Layout title="index">
-  <div class="flex flex-row flex-wrap">
-    {works.map((item) => <a href={item.slug}>{item.slug},&nbsp;</a>)}
+  <div class="flex flex-row flex-wrap wrap-anywhere">
+    {works.map((item) => <a href={item.slug}>{item.title},&nbsp;</a>)}
   </div>
 </Layout>

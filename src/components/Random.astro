@@ -7,22 +7,40 @@ await pb.admins.authWithPassword(
   import.meta.env.POCKETBASE_PASSWORD
 );
 const data = await pb.collection("works").getFullList();
-const {title} = Astro.props;
+const { title } = Astro.props;
 ---
 
 <div>
-  <a id="ran" href="">{title == null ? <slot/> : title}</a>
+  <a id="ran" href="">{title == null ? <slot /> : title}</a>
+  <!-- <p id="blinking" style="display:none; color:text-blue-950">(click me!)</p> -->
 </div>
 
-<script define:vars={{data}}>
+<script define:vars={{ data }}>
   let previouslySelectedWorks = new Set();
 
   const buttons = document.querySelectorAll("#ran");
+  const clickme = document.getElementById("blinking");
 
   // Handle clicks on each button.
   buttons.forEach((button) => {
     button.addEventListener("click", () => random());
   });
+
+  let hidden = false;
+
+  setInterval(blinking, 1000);
+
+  function blinking() {
+    if (!hidden) {
+      clickme.style.display = "none";
+      console.log("hide");
+      hidden = true;
+    } else {
+      clickme.style.display = "inline-block";
+      console.log("show");
+      hidden = false;
+    }
+  }
 
   function random() {
     let randomWork;
