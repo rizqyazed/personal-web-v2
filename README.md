@@ -2,5 +2,7 @@ this is my personal website v2 - handcrafted my me in 2025 - astro, pocketbase, 
 
 todo list
 
+- [ ] current setup
+- [ ] guest book
+- [ ] mini games?
 - [ ]
-
